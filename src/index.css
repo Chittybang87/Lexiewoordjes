@@ -238,6 +238,97 @@ button {
   text-align: center;
 }
 
+.install-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  width: 100%;
+  max-width: 320px;
+  margin: 0.35rem auto 0;
+  min-height: 52px;
+  padding: 0.75rem 1.4rem;
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--blue-deep);
+  font-size: 1.1rem;
+  font-weight: 700;
+  box-shadow: var(--shadow);
+  border: 2px solid rgba(91, 159, 212, 0.45);
+}
+
+.install-btn__icon {
+  display: inline-flex;
+  width: 1.6rem;
+  height: 1.6rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--blue);
+  color: var(--white);
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.install-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.install-sheet__backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  background: rgba(58, 46, 36, 0.45);
+  cursor: pointer;
+}
+
+.install-sheet__panel {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 420px);
+  padding: 1.4rem 1.35rem 1.5rem;
+  border-radius: 28px 28px 20px 20px;
+  background: var(--cream);
+  box-shadow: var(--shadow);
+  text-align: left;
+}
+
+.install-sheet__title {
+  margin: 0 0 0.85rem;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--ink);
+  text-align: center;
+}
+
+.install-sheet__steps {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 0.65rem;
+  font-size: 1.05rem;
+  line-height: 1.35;
+  font-weight: 500;
+}
+
+.install-sheet__note {
+  margin: 1rem 0 1.15rem;
+  font-size: 0.95rem;
+  color: var(--blue-deep);
+  font-weight: 600;
+  text-align: center;
+}
+
+.install-sheet__ok {
+  width: 100%;
+}
+
 .level-btn:disabled {
   opacity: 0.45;
   cursor: not-allowed;

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { LEVEL_LABELS, type Level } from '../data/words';
+import { InstallAppButton } from './InstallAppButton';
 import { LexieCharacter } from './LexieCharacter';
 
 interface Props {
@@ -97,6 +98,7 @@ export function HomeScreen({
             </span>
           </motion.button>
         ))}
+        <InstallAppButton />
       </motion.div>
     </div>
   );
