@@ -52,7 +52,7 @@ export function MissionIntro({
           animate={{ scale: [1, 1.03, 1] }}
           transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
         >
-          Laten we gaan!
+          Ga op pad!
         </motion.button>
       </motion.div>
     </div>

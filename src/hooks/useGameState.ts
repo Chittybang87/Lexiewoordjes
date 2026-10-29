@@ -12,12 +12,13 @@ import {
 export type Screen =
   | 'home'
   | 'mission-intro'
+  | 'explore'
   | 'playing'
   | 'mission-done'
   | 'round-done'
   | 'settings'
   | 'stats';
-export type LexieMood = 'idle' | 'happy' | 'wrong' | 'wave';
+export type LexieMood = 'idle' | 'happy' | 'wrong' | 'wave' | 'walk';
 
 const MISSIONS_PER_ROUND = 3;
 
@@ -126,6 +127,11 @@ export function useGameState(wordPool: WordItem[] = WORDS, statsHooks: GameStats
 
   const beginPlaying = useCallback(() => {
     setLexieMood('idle');
+    setScreen('explore');
+  }, []);
+
+  const beginSpelling = useCallback(() => {
+    setLexieMood('idle');
     setScreen('playing');
   }, []);
 
@@ -202,6 +208,7 @@ export function useGameState(wordPool: WordItem[] = WORDS, statsHooks: GameStats
       choicesRef.current = choices;
       setLetterChoices(choices);
       setLexieMood('idle');
+      setScreen('explore');
       return;
     }
 
@@ -263,6 +270,7 @@ export function useGameState(wordPool: WordItem[] = WORDS, statsHooks: GameStats
     showConfetti,
     startGame,
     beginPlaying,
+    beginSpelling,
     goHome,
     openSettings,
     openStats,

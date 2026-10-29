@@ -40,15 +40,29 @@ const ANIMATIONS: Record<
     duration: 0.5,
     repeat: 0,
   },
+  walk: {
+    frames: ['/characters/lexie-run.png', '/characters/lexie-idle.png'],
+    interval: 220,
+    bounce: { y: [0, -10, 0, -6, 0], rotate: [0, -2, 2, 0] },
+    duration: 0.45,
+    repeat: Infinity,
+  },
 };
 
 interface Props {
   mood?: LexieMood;
   size?: number;
   className?: string;
+  /** Run sprite faces right; flip for left. */
+  facing?: 'left' | 'right';
 }
 
-export function LexieCharacter({ mood = 'idle', size = 160, className }: Props) {
+export function LexieCharacter({
+  mood = 'idle',
+  size = 160,
+  className,
+  facing = 'right',
+}: Props) {
   const anim = ANIMATIONS[mood];
   const [frame, setFrame] = useState(0);
 
@@ -64,7 +78,11 @@ export function LexieCharacter({ mood = 'idle', size = 160, className }: Props) 
   return (
     <motion.div
       className={`lexie-sprite${className ? ` ${className}` : ''}`}
-      style={{ width: size, height: size }}
+      style={{
+        width: size,
+        height: size,
+        scaleX: facing === 'left' ? -1 : 1,
+      }}
       animate={anim.bounce}
       transition={{
         duration: anim.duration,

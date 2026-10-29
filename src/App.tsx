@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { MissionDone, RoundDone } from './components/Celebration';
 import { Confetti } from './components/Confetti';
 import { HomeScreen } from './components/HomeScreen';
+import { ExploreWorld } from './components/ExploreWorld';
 import { MissionIntro } from './components/MissionIntro';
 import { SettingsScreen } from './components/SettingsScreen';
 import { StatsScreen } from './components/StatsScreen';
@@ -127,6 +128,24 @@ export default function App() {
             play('tap');
             game.beginPlaying();
           }}
+        />
+      )}
+
+      {game.screen === 'explore' && game.currentMission && game.currentWord && (
+        <ExploreWorld
+          mission={game.currentMission}
+          words={game.words}
+          target={game.currentWord}
+          wordIndex={game.wordIndex}
+          totalWords={game.words.length}
+          stars={game.stars}
+          onFound={() => {
+            play('mission');
+            game.beginSpelling();
+          }}
+          onHome={game.goHome}
+          onTapSound={() => play('tap')}
+          onWrongSound={() => play('wrong')}
         />
       )}
 

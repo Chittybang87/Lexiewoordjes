@@ -606,6 +606,166 @@ button {
   z-index: 1;
 }
 
+.scene__veil--soft {
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 248, 240, 0.05) 0%,
+    rgba(255, 248, 240, 0.12) 50%,
+    rgba(255, 248, 240, 0.28) 100%
+  );
+}
+
+/* —— Explore / walk world —— */
+.explore {
+  gap: 0.4rem;
+  padding-bottom: 0.75rem;
+}
+
+.explore__bar {
+  width: 100%;
+  max-width: 40rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.explore__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  gap: 0.1rem;
+  background: rgba(255, 248, 240, 0.75);
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  box-shadow: 0 2px 10px rgba(58, 46, 36, 0.08);
+}
+
+.explore__stars {
+  min-width: 48px;
+  text-align: right;
+  color: var(--gold);
+  font-size: 1rem;
+  letter-spacing: -1px;
+  word-break: break-all;
+}
+
+.explore__hint {
+  margin: 0;
+  font-size: clamp(1.15rem, 4vw, 1.45rem);
+  font-weight: 700;
+  color: var(--ink);
+  background: rgba(255, 248, 240, 0.9);
+  padding: 0.45rem 1.1rem;
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+}
+
+.explore__world {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  max-width: 44rem;
+  min-height: 280px;
+  border-radius: 28px;
+  overflow: hidden;
+  cursor: pointer;
+  touch-action: manipulation;
+  box-shadow: 0 10px 28px rgba(58, 46, 36, 0.12);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.explore__floor-glow {
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  bottom: 4%;
+  height: 42%;
+  border-radius: 50% 50% 20% 20%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.28) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.explore__spot {
+  position: absolute;
+  z-index: 3;
+  transform: translate(-50%, -50%);
+  width: clamp(3.4rem, 12vw, 4.4rem);
+  height: clamp(3.4rem, 12vw, 4.4rem);
+  border-radius: 50%;
+  background: rgba(255, 248, 240, 0.92);
+  box-shadow: 0 6px 16px rgba(58, 46, 36, 0.18);
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 3px solid transparent;
+}
+
+.explore__spot--target {
+  border-color: var(--gold);
+  box-shadow:
+    0 6px 16px rgba(58, 46, 36, 0.18),
+    0 0 0 6px rgba(240, 192, 64, 0.25);
+}
+
+.explore__spot--done {
+  filter: grayscale(0.4);
+  cursor: default;
+}
+
+.explore__spot-emoji {
+  font-size: clamp(1.6rem, 6vw, 2.2rem);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.explore__pulse {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid rgba(240, 192, 64, 0.7);
+  animation: explore-pulse 1.4s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes explore-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+}
+
+.explore__lexie {
+  position: absolute;
+  z-index: 4;
+  transform: translate(-50%, -78%);
+  pointer-events: none;
+  filter: drop-shadow(0 10px 14px rgba(58, 46, 36, 0.25));
+}
+
+.explore__toast {
+  position: absolute;
+  bottom: 1.25rem;
+  margin: 0;
+  z-index: 5;
+  font-weight: 700;
+  font-size: 1.1rem;
+  background: rgba(255, 248, 240, 0.95);
+  padding: 0.5rem 1.1rem;
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+}
+
 .scene__sky {
   position: absolute;
   inset: 0;

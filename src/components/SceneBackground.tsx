@@ -3,18 +3,20 @@ import { motion } from 'framer-motion';
 interface Props {
   scene: string;
   className?: string;
+  /** Lighter overlay so the room stays readable while exploring. */
+  softVeil?: boolean;
 }
 
 const easeSoft = [0.45, 0.05, 0.55, 0.95] as const;
 
-export function SceneBackground({ scene, className }: Props) {
+export function SceneBackground({ scene, className, softVeil }: Props) {
   return (
     <div className={`scene scene--${scene}${className ? ` ${className}` : ''}`} aria-hidden>
       {scene === 'keuken' && <KitchenScene />}
       {scene === 'winkel' && <ShopScene />}
       {scene === 'post' && <PostScene />}
       {scene === 'park' && <ParkScene />}
-      <div className="scene__veil" />
+      <div className={`scene__veil${softVeil ? ' scene__veil--soft' : ''}`} />
     </div>
   );
 }
