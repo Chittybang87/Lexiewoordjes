@@ -30,7 +30,7 @@ export const MISSIONS: Mission[] = [
     id: 'winkel',
     naam: 'Winkel',
     titel: 'Naar de winkel!',
-    intro: 'Lexie doet boodschappen met haar tasje. Wat moet erin?',
+    intro: 'Lexie doet boodschappen met haar winkelkar. Wat moet erin?',
     emoji: '🛒',
     gradient: 'linear-gradient(160deg, #E8F5EC 0%, #B8E0C8 40%, #6CB88A 100%)',
   },
@@ -50,46 +50,77 @@ export const MISSIONS: Mission[] = [
     emoji: '🌳',
     gradient: 'linear-gradient(160deg, #E8F4FC 0%, #A8D4F0 40%, #5BA4D0 100%)',
   },
+  {
+    id: 'boerderij',
+    naam: 'Boerderij',
+    titel: 'Naar de boerderij!',
+    intro: 'Lexie bezoekt de boerderij. Welke woordjes hoor je daar?',
+    emoji: '🐄',
+    gradient: 'linear-gradient(160deg, #F5F0E0 0%, #D8E8B8 40%, #8CB86A 100%)',
+  },
+  {
+    id: 'bos',
+    naam: 'Bos',
+    titel: 'Naar het bos!',
+    intro: 'Lexie wandelt in het bos. Maak de woordjes die je ziet!',
+    emoji: '🌲',
+    gradient: 'linear-gradient(160deg, #E8F4E8 0%, #A8D0A8 40%, #5A9860 100%)',
+  },
 ];
 
 export const WORDS: WordItem[] = [
-  // Keuken – niveau 1 (2–3)
+  // Keuken – niveau 1
   { id: 'k-ei', woord: 'ei', emoji: '🥚', niveau: 1, opdrachtId: 'keuken' },
   { id: 'k-pan', woord: 'pan', emoji: '🍳', niveau: 1, opdrachtId: 'keuken' },
   { id: 'k-kop', woord: 'kop', emoji: '☕', niveau: 1, opdrachtId: 'keuken' },
-  // Keuken – niveau 2 (3–4)
+  { id: 'k-mes', woord: 'mes', emoji: '🔪', niveau: 1, opdrachtId: 'keuken' },
+  { id: 'k-pot', woord: 'pot', emoji: '🍲', niveau: 1, opdrachtId: 'keuken' },
+  // Keuken – niveau 2
   { id: 'k-bord', woord: 'bord', emoji: '🍽️', niveau: 2, opdrachtId: 'keuken' },
   { id: 'k-kaas', woord: 'kaas', emoji: '🧀', niveau: 2, opdrachtId: 'keuken' },
   { id: 'k-melk', woord: 'melk', emoji: '🥛', niveau: 2, opdrachtId: 'keuken' },
   { id: 'k-soep', woord: 'soep', emoji: '🥣', niveau: 2, opdrachtId: 'keuken' },
-  // Keuken – niveau 3 (4–5)
+  { id: 'k-oven', woord: 'oven', emoji: '🔥', niveau: 2, opdrachtId: 'keuken' },
+  { id: 'k-vork', woord: 'vork', emoji: '🍴', niveau: 2, opdrachtId: 'keuken' },
+  // Keuken – niveau 3
   { id: 'k-lepel', woord: 'lepel', emoji: '🥄', niveau: 3, opdrachtId: 'keuken' },
   { id: 'k-boter', woord: 'boter', emoji: '🧈', niveau: 3, opdrachtId: 'keuken' },
   { id: 'k-taart', woord: 'taart', emoji: '🎂', niveau: 3, opdrachtId: 'keuken' },
+  { id: 'k-fruit', woord: 'fruit', emoji: '🍎', niveau: 3, opdrachtId: 'keuken' },
+  { id: 'k-water', woord: 'water', emoji: '💧', niveau: 3, opdrachtId: 'keuken' },
 
   // Winkel – niveau 1
   { id: 'w-tas', woord: 'tas', emoji: '🛍️', niveau: 1, opdrachtId: 'winkel' },
   { id: 'w-ui', woord: 'ui', emoji: '🧅', niveau: 1, opdrachtId: 'winkel' },
   { id: 'w-jam', woord: 'jam', emoji: '🍓', niveau: 1, opdrachtId: 'winkel' },
+  { id: 'w-nut', woord: 'nut', emoji: '🥜', niveau: 1, opdrachtId: 'winkel' },
+  { id: 'w-ijs', woord: 'ijs', emoji: '🍦', niveau: 1, opdrachtId: 'winkel' },
   // Winkel – niveau 2
   { id: 'w-peer', woord: 'peer', emoji: '🍐', niveau: 2, opdrachtId: 'winkel' },
   { id: 'w-melk', woord: 'melk', emoji: '🥛', niveau: 2, opdrachtId: 'winkel' },
   { id: 'w-vis', woord: 'vis', emoji: '🐟', niveau: 2, opdrachtId: 'winkel' },
   { id: 'w-kaas', woord: 'kaas', emoji: '🧀', niveau: 2, opdrachtId: 'winkel' },
+  { id: 'w-rijst', woord: 'rijst', emoji: '🍚', niveau: 2, opdrachtId: 'winkel' },
+  { id: 'w-sap', woord: 'sap', emoji: '🧃', niveau: 2, opdrachtId: 'winkel' },
   // Winkel – niveau 3
   { id: 'w-brood', woord: 'brood', emoji: '🍞', niveau: 3, opdrachtId: 'winkel' },
   { id: 'w-appel', woord: 'appel', emoji: '🍎', niveau: 3, opdrachtId: 'winkel' },
   { id: 'w-worst', woord: 'worst', emoji: '🌭', niveau: 3, opdrachtId: 'winkel' },
   { id: 'w-druif', woord: 'druif', emoji: '🍇', niveau: 3, opdrachtId: 'winkel' },
+  { id: 'w-tomaat', woord: 'tomaat', emoji: '🍅', niveau: 3, opdrachtId: 'winkel' },
 
   // Post – niveau 1
   { id: 'p-pen', woord: 'pen', emoji: '✒️', niveau: 1, opdrachtId: 'post' },
   { id: 'p-zak', woord: 'zak', emoji: '👝', niveau: 1, opdrachtId: 'post' },
   { id: 'p-bus', woord: 'bus', emoji: '🚌', niveau: 1, opdrachtId: 'post' },
+  { id: 'p-map', woord: 'map', emoji: '🗺️', niveau: 1, opdrachtId: 'post' },
+  { id: 'p-bel', woord: 'bel', emoji: '🔔', niveau: 1, opdrachtId: 'post' },
   // Post – niveau 2
   { id: 'p-doos', woord: 'doos', emoji: '📦', niveau: 2, opdrachtId: 'post' },
   { id: 'p-post', woord: 'post', emoji: '📮', niveau: 2, opdrachtId: 'post' },
   { id: 'p-pak', woord: 'pak', emoji: '📭', niveau: 2, opdrachtId: 'post' },
+  { id: 'p-tape', woord: 'tape', emoji: '📎', niveau: 2, opdrachtId: 'post' },
+  { id: 'p-naam', woord: 'naam', emoji: '🏷️', niveau: 2, opdrachtId: 'post' },
   // Post – niveau 3
   { id: 'p-brief', woord: 'brief', emoji: '✉️', niveau: 3, opdrachtId: 'post' },
   { id: 'p-kaart', woord: 'kaart', emoji: '💌', niveau: 3, opdrachtId: 'post' },
@@ -101,15 +132,59 @@ export const WORDS: WordItem[] = [
   { id: 'pk-bal', woord: 'bal', emoji: '⚽', niveau: 1, opdrachtId: 'park' },
   { id: 'pk-zon', woord: 'zon', emoji: '☀️', niveau: 1, opdrachtId: 'park' },
   { id: 'pk-tak', woord: 'tak', emoji: '🪵', niveau: 1, opdrachtId: 'park' },
+  { id: 'pk-pad', woord: 'pad', emoji: '🛤️', niveau: 1, opdrachtId: 'park' },
+  { id: 'pk-bij', woord: 'bij', emoji: '🐝', niveau: 1, opdrachtId: 'park' },
   // Park – niveau 2
   { id: 'pk-boom', woord: 'boom', emoji: '🌳', niveau: 2, opdrachtId: 'park' },
   { id: 'pk-bank', woord: 'bank', emoji: '🪑', niveau: 2, opdrachtId: 'park' },
   { id: 'pk-park', woord: 'park', emoji: '🏞️', niveau: 2, opdrachtId: 'park' },
   { id: 'pk-duif', woord: 'duif', emoji: '🕊️', niveau: 2, opdrachtId: 'park' },
+  { id: 'pk-gras', woord: 'gras', emoji: '🌿', niveau: 2, opdrachtId: 'park' },
+  { id: 'pk-zonnet', woord: 'zand', emoji: '🏖️', niveau: 2, opdrachtId: 'park' },
   // Park – niveau 3
   { id: 'pk-vogel', woord: 'vogel', emoji: '🐦', niveau: 3, opdrachtId: 'park' },
   { id: 'pk-bloem', woord: 'bloem', emoji: '🌸', niveau: 3, opdrachtId: 'park' },
   { id: 'pk-wolk', woord: 'wolk', emoji: '☁️', niveau: 3, opdrachtId: 'park' },
+  { id: 'pk-schommel', woord: 'schommel', emoji: '🪀', niveau: 3, opdrachtId: 'park' },
+  { id: 'pk-picknick', woord: 'kleed', emoji: '🧺', niveau: 3, opdrachtId: 'park' },
+
+  // Boerderij – niveau 1
+  { id: 'b-koe', woord: 'koe', emoji: '🐄', niveau: 1, opdrachtId: 'boerderij' },
+  { id: 'b-ei', woord: 'ei', emoji: '🥚', niveau: 1, opdrachtId: 'boerderij' },
+  { id: 'b-os', woord: 'os', emoji: '🐂', niveau: 1, opdrachtId: 'boerderij' },
+  { id: 'b-hen', woord: 'hen', emoji: '🐔', niveau: 1, opdrachtId: 'boerderij' },
+  { id: 'b-ram', woord: 'ram', emoji: '🐏', niveau: 1, opdrachtId: 'boerderij' },
+  // Boerderij – niveau 2
+  { id: 'b-paard', woord: 'paard', emoji: '🐴', niveau: 2, opdrachtId: 'boerderij' },
+  { id: 'b-schaap', woord: 'schaap', emoji: '🐑', niveau: 2, opdrachtId: 'boerderij' },
+  { id: 'b-boer', woord: 'boer', emoji: '🧑‍🌾', niveau: 2, opdrachtId: 'boerderij' },
+  { id: 'b-stal', woord: 'stal', emoji: '🏚️', niveau: 2, opdrachtId: 'boerderij' },
+  { id: 'b-melk', woord: 'melk', emoji: '🥛', niveau: 2, opdrachtId: 'boerderij' },
+  // Boerderij – niveau 3
+  { id: 'b-tractor', woord: 'tractor', emoji: '🚜', niveau: 3, opdrachtId: 'boerderij' },
+  { id: 'b-kuiken', woord: 'kuiken', emoji: '🐥', niveau: 3, opdrachtId: 'boerderij' },
+  { id: 'b-emmer', woord: 'emmer', emoji: '🪣', niveau: 3, opdrachtId: 'boerderij' },
+  { id: 'b-graan', woord: 'graan', emoji: '🌽', niveau: 3, opdrachtId: 'boerderij' },
+  { id: 'b-varken', woord: 'varken', emoji: '🐷', niveau: 3, opdrachtId: 'boerderij' },
+
+  // Bos – niveau 1
+  { id: 'f-bos', woord: 'bos', emoji: '🌲', niveau: 1, opdrachtId: 'bos' },
+  { id: 'f-tak', woord: 'tak', emoji: '🪵', niveau: 1, opdrachtId: 'bos' },
+  { id: 'f-uil', woord: 'uil', emoji: '🦉', niveau: 1, opdrachtId: 'bos' },
+  { id: 'f-pad', woord: 'pad', emoji: '🥾', niveau: 1, opdrachtId: 'bos' },
+  { id: 'f-mos', woord: 'mos', emoji: '🟢', niveau: 1, opdrachtId: 'bos' },
+  // Bos – niveau 2
+  { id: 'f-boom', woord: 'boom', emoji: '🌳', niveau: 2, opdrachtId: 'bos' },
+  { id: 'f-blad', woord: 'blad', emoji: '🍃', niveau: 2, opdrachtId: 'bos' },
+  { id: 'f-vos', woord: 'vos', emoji: '🦊', niveau: 2, opdrachtId: 'bos' },
+  { id: 'f-nest', woord: 'nest', emoji: '🪺', niveau: 2, opdrachtId: 'bos' },
+  { id: 'f-stam', woord: 'stam', emoji: '🪵', niveau: 2, opdrachtId: 'bos' },
+  // Bos – niveau 3
+  { id: 'f-eikel', woord: 'eikel', emoji: '🌰', niveau: 3, opdrachtId: 'bos' },
+  { id: 'f-konijn', woord: 'konijn', emoji: '🐇', niveau: 3, opdrachtId: 'bos' },
+  { id: 'f-paddestoel', woord: 'zwam', emoji: '🍄', niveau: 3, opdrachtId: 'bos' },
+  { id: 'f-spar', woord: 'spar', emoji: '🎄', niveau: 3, opdrachtId: 'bos' },
+  { id: 'f-insect', woord: 'mier', emoji: '🐜', niveau: 3, opdrachtId: 'bos' },
 ];
 
 /** Lookalike distractors for harder levels */
@@ -147,6 +222,8 @@ export function letterPoolSize(level: Level): number {
   return 12;
 }
 
+const MAX_WORDS_PER_MISSION = 8;
+
 export function wordsForMission(
   missionId: string,
   level: Level,
@@ -155,17 +232,19 @@ export function wordsForMission(
   const matching = pool.filter(
     (w) => w.opdrachtId === missionId && w.niveau === level,
   );
-  // Fallback: if too few exact matches, include easier words
-  if (matching.length >= 3) return shuffle([...matching]).slice(0, 4);
+  if (matching.length > 0) {
+    return shuffle([...matching]).slice(0, Math.min(MAX_WORDS_PER_MISSION, matching.length));
+  }
 
   const fallback = pool.filter(
     (w) => w.opdrachtId === missionId && w.niveau <= level,
   );
-  if (fallback.length > 0) return shuffle([...fallback]).slice(0, Math.min(4, fallback.length));
+  if (fallback.length > 0) {
+    return shuffle([...fallback]).slice(0, Math.min(MAX_WORDS_PER_MISSION, fallback.length));
+  }
 
-  // Last resort: any words at this level from the active pool
   const anyLevel = pool.filter((w) => w.niveau <= level);
-  return shuffle([...anyLevel]).slice(0, Math.min(4, anyLevel.length));
+  return shuffle([...anyLevel]).slice(0, Math.min(MAX_WORDS_PER_MISSION, anyLevel.length));
 }
 
 export function buildLetterChoices(woord: string, level: Level): string[] {
@@ -173,7 +252,6 @@ export function buildLetterChoices(woord: string, level: Level): string[] {
   const poolSize = letterPoolSize(level);
   const pool: string[] = [...letters];
 
-  // Prefer lookalikes on level 2+
   if (level >= 2) {
     for (const ch of letters) {
       const alike = LOOKALIKES[ch] ?? [];
@@ -184,14 +262,12 @@ export function buildLetterChoices(woord: string, level: Level): string[] {
     }
   }
 
-  // Fill remaining with random alphabet letters
   const remaining = ALPHABET.filter((c) => !pool.includes(c));
   shuffle(remaining);
   while (pool.length < poolSize && remaining.length > 0) {
     pool.push(remaining.pop()!);
   }
 
-  // Ensure we have enough instances of needed letters already in pool
   return shuffle(pool).slice(0, poolSize);
 }
 

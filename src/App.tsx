@@ -1,12 +1,15 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { MissionDone, RoundDone } from './components/Celebration';
+import { MissionDone } from './components/Celebration';
 import { Confetti } from './components/Confetti';
-import { HomeScreen } from './components/HomeScreen';
 import { ExploreWorld } from './components/ExploreWorld';
+import { HomeScreen } from './components/HomeScreen';
+import { HouseScreen } from './components/HouseScreen';
 import { MissionIntro } from './components/MissionIntro';
 import { SettingsScreen } from './components/SettingsScreen';
 import { StatsScreen } from './components/StatsScreen';
 import { WordGame } from './components/WordGame';
+import { WorldMapScreen } from './components/WorldMapScreen';
+import type { WorldPlace } from './data/world';
 import { useGameState } from './hooks/useGameState';
 import { useSettings } from './hooks/useSettings';
 import { useSound } from './hooks/useSound';
@@ -66,6 +69,18 @@ export default function App() {
     advanceAfterWord();
   }, [advanceAfterWord]);
 
+  const handlePlace = useCallback(
+    (place: WorldPlace) => {
+      play('tap');
+      if (place.kind === 'house') {
+        game.openHouse();
+        return;
+      }
+      if (place.missionId) game.startMission(place.missionId);
+    },
+    [game, play],
+  );
+
   useEffect(() => {
     if (game.screen === 'mission-intro') play('mission');
     // eslint-disable-next-line react-hooks/exhaustive-deps -- only on mission change
@@ -119,11 +134,33 @@ export default function App() {
         />
       )}
 
+      {game.screen === 'world-map' && (
+        <WorldMapScreen
+          level={game.level}
+          onSelectPlace={handlePlace}
+          onHome={game.goHome}
+          canVisit={game.canVisitMission}
+        />
+      )}
+
+      {game.screen === 'house' && (
+        <HouseScreen
+          onSelectRoom={(missionId) => {
+            play('tap');
+            game.startMission(missionId);
+          }}
+          onBack={() => {
+            play('tap');
+            game.goToMap();
+          }}
+          canVisit={game.canVisitMission}
+        />
+      )}
+
       {game.screen === 'mission-intro' && game.currentMission && (
         <MissionIntro
           mission={game.currentMission}
-          missionNumber={game.missionIndex + 1}
-          totalMissions={game.totalMissions}
+          wordCount={game.words.length}
           onContinue={() => {
             play('tap');
             game.beginPlaying();
@@ -143,7 +180,7 @@ export default function App() {
             play('mission');
             game.beginSpelling();
           }}
-          onHome={game.goHome}
+          onHome={game.goToMap}
           onTapSound={() => play('tap')}
           onWrongSound={() => play('wrong')}
         />
@@ -163,7 +200,7 @@ export default function App() {
           onSelectLetter={handleSelect}
           wordComplete={wordComplete}
           onNextWord={handleNextWord}
-          onHome={game.goHome}
+          onHome={game.goToMap}
         />
       )}
 
@@ -171,21 +208,9 @@ export default function App() {
         <MissionDone
           mission={game.currentMission}
           stars={game.stars}
-          isLast={game.missionIndex + 1 >= game.totalMissions}
           onContinue={() => {
             play('mission');
-            game.nextMission();
-          }}
-        />
-      )}
-
-      {game.screen === 'round-done' && (
-        <RoundDone
-          stars={game.stars}
-          onHome={game.goHome}
-          onReplay={() => {
-            play('mission');
-            game.startGame(game.level);
+            game.finishMissionToMap();
           }}
         />
       )}

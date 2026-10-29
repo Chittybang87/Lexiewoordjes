@@ -11,16 +11,15 @@ import {
 
 export type Screen =
   | 'home'
+  | 'world-map'
+  | 'house'
   | 'mission-intro'
   | 'explore'
   | 'playing'
   | 'mission-done'
-  | 'round-done'
   | 'settings'
   | 'stats';
 export type LexieMood = 'idle' | 'happy' | 'wrong' | 'wave' | 'walk';
-
-const MISSIONS_PER_ROUND = 3;
 
 type LetterChoice = { id: string; letter: string; used: boolean };
 
@@ -40,20 +39,10 @@ function makeChoices(woord: string, level: Level): LetterChoice[] {
   }));
 }
 
-function pickMissionOrder(pool: WordItem[]): string[] {
-  const withWords = MISSIONS.filter((m) => pool.some((w) => w.opdrachtId === m.id)).map(
-    (m) => m.id,
-  );
-  const source = withWords.length > 0 ? withWords : MISSIONS.map((m) => m.id);
-  const shuffled = [...source].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, Math.min(MISSIONS_PER_ROUND, shuffled.length));
-}
-
 export function useGameState(wordPool: WordItem[] = WORDS, statsHooks: GameStatsHooks = {}) {
   const [screen, setScreen] = useState<Screen>('home');
   const [level, setLevel] = useState<Level>(1);
-  const [missionOrder, setMissionOrder] = useState<string[]>([]);
-  const [missionIndex, setMissionIndex] = useState(0);
+  const [activeMissionId, setActiveMissionId] = useState<string | null>(null);
   const [words, setWords] = useState<WordItem[]>([]);
   const [wordIndex, setWordIndex] = useState(0);
   const [filled, setFilled] = useState<string[]>([]);
@@ -71,8 +60,6 @@ export function useGameState(wordPool: WordItem[] = WORDS, statsHooks: GameStats
   const wordIndexRef = useRef(wordIndex);
   const levelRef = useRef(level);
   const screenRef = useRef(screen);
-  const missionIndexRef = useRef(missionIndex);
-  const missionOrderRef = useRef(missionOrder);
   const poolRef = useRef(wordPool);
   const statsRef = useRef(statsHooks);
 
@@ -82,16 +69,13 @@ export function useGameState(wordPool: WordItem[] = WORDS, statsHooks: GameStats
   wordsRef.current = words;
   wordIndexRef.current = wordIndex;
   levelRef.current = level;
-  missionIndexRef.current = missionIndex;
-  missionOrderRef.current = missionOrder;
   poolRef.current = wordPool;
   statsRef.current = statsHooks;
 
   const currentMission: Mission | null = useMemo(() => {
-    if (!missionOrder.length) return null;
-    const id = missionOrder[missionIndex];
-    return MISSIONS.find((m) => m.id === id) ?? null;
-  }, [missionOrder, missionIndex]);
+    if (!activeMissionId) return null;
+    return MISSIONS.find((m) => m.id === activeMissionId) ?? null;
+  }, [activeMissionId]);
 
   const currentWord: WordItem | null = words[wordIndex] ?? null;
   wordRef.current = currentWord;
@@ -101,28 +85,60 @@ export function useGameState(wordPool: WordItem[] = WORDS, statsHooks: GameStats
     window.setTimeout(() => setLexieMood('idle'), ms);
   }, []);
 
+  const canVisitMission = useCallback((missionId: string) => {
+    const lvl = levelRef.current;
+    return poolRef.current.some((w) => w.opdrachtId === missionId && w.niveau <= lvl);
+  }, []);
+
   const startGame = useCallback((chosenLevel: Level) => {
     const pool = poolRef.current;
     if (pool.length === 0) return;
-    const order = pickMissionOrder(pool);
-    const missionId = order[0];
-    const missionWords = wordsForMission(missionId, chosenLevel, pool);
-    if (missionWords.length === 0) return;
     setLevel(chosenLevel);
-    setMissionOrder(order);
-    setMissionIndex(0);
+    setActiveMissionId(null);
+    setWords([]);
+    setWordIndex(0);
+    setFilled([]);
+    filledRef.current = [];
+    setLetterChoices([]);
+    choicesRef.current = [];
+    setStars(0);
+    setShowConfetti(false);
+    setLexieMood('wave');
+    setScreen('world-map');
+    statsRef.current.onGameStart?.(chosenLevel);
+  }, []);
+
+  const openHouse = useCallback(() => {
+    setLexieMood('wave');
+    setScreen('house');
+  }, []);
+
+  const goToMap = useCallback(() => {
+    setShowConfetti(false);
+    setShake(false);
+    setActiveMissionId(null);
+    setLexieMood('wave');
+    setScreen('world-map');
+  }, []);
+
+  const startMission = useCallback((missionId: string) => {
+    const pool = poolRef.current;
+    const currentLevel = levelRef.current;
+    const missionWords = wordsForMission(missionId, currentLevel, pool);
+    if (missionWords.length === 0) return false;
+
+    setActiveMissionId(missionId);
     setWords(missionWords);
     setWordIndex(0);
     setFilled([]);
     filledRef.current = [];
-    const choices = makeChoices(missionWords[0].woord, chosenLevel);
+    const choices = makeChoices(missionWords[0].woord, currentLevel);
     choicesRef.current = choices;
     setLetterChoices(choices);
-    setStars(0);
     setShowConfetti(false);
     setLexieMood('wave');
     setScreen('mission-intro');
-    statsRef.current.onGameStart?.(chosenLevel);
+    return true;
   }, []);
 
   const beginPlaying = useCallback(() => {
@@ -137,6 +153,7 @@ export function useGameState(wordPool: WordItem[] = WORDS, statsHooks: GameStats
 
   const goHome = useCallback(() => {
     setScreen('home');
+    setActiveMissionId(null);
     setLexieMood('wave');
     setShowConfetti(false);
     setShake(false);
@@ -217,46 +234,16 @@ export function useGameState(wordPool: WordItem[] = WORDS, statsHooks: GameStats
     setScreen('mission-done');
   }, []);
 
-  const nextMission = useCallback(() => {
+  const finishMissionToMap = useCallback(() => {
     setShowConfetti(false);
-    const order = missionOrderRef.current;
-    const idx = missionIndexRef.current;
-    const currentLevel = levelRef.current;
-    const pool = poolRef.current;
-
-    if (idx + 1 >= order.length) {
-      setLexieMood('happy');
-      setShowConfetti(true);
-      statsRef.current.onRoundComplete?.();
-      setScreen('round-done');
-      return;
-    }
-
-    const nextIdx = idx + 1;
-    const missionId = order[nextIdx];
-    const missionWords = wordsForMission(missionId, currentLevel, pool);
-    if (missionWords.length === 0) {
-      statsRef.current.onRoundComplete?.();
-      setScreen('round-done');
-      return;
-    }
-    setMissionIndex(nextIdx);
-    setWords(missionWords);
-    setWordIndex(0);
-    setFilled([]);
-    filledRef.current = [];
-    const choices = makeChoices(missionWords[0].woord, currentLevel);
-    choicesRef.current = choices;
-    setLetterChoices(choices);
+    setActiveMissionId(null);
     setLexieMood('wave');
-    setScreen('mission-intro');
+    setScreen('world-map');
   }, []);
 
   return {
     screen,
     level,
-    missionOrder,
-    missionIndex,
     currentMission,
     words,
     wordIndex,
@@ -269,6 +256,9 @@ export function useGameState(wordPool: WordItem[] = WORDS, statsHooks: GameStats
     shake,
     showConfetti,
     startGame,
+    startMission,
+    openHouse,
+    goToMap,
     beginPlaying,
     beginSpelling,
     goHome,
@@ -277,8 +267,8 @@ export function useGameState(wordPool: WordItem[] = WORDS, statsHooks: GameStats
     toggleSound,
     selectLetter,
     advanceAfterWord,
-    nextMission,
-    totalMissions: missionOrder.length || MISSIONS_PER_ROUND,
+    finishMissionToMap,
+    canVisitMission,
     canPlay: wordPool.length > 0,
   };
 }

@@ -6,14 +6,13 @@ import { SceneBackground } from './SceneBackground';
 interface MissionDoneProps {
   mission: Mission;
   stars: number;
-  isLast: boolean;
   onContinue: () => void;
 }
 
-export function MissionDone({ mission, stars, isLast, onContinue }: MissionDoneProps) {
+export function MissionDone({ mission, stars, onContinue }: MissionDoneProps) {
   return (
     <div className="screen celebration">
-      <SceneBackground scene={mission.id} />
+      <SceneBackground scene={mission.id} rich />
       <motion.div
         className="celebration__box"
         initial={{ scale: 0.7, opacity: 0 }}
@@ -30,7 +29,7 @@ export function MissionDone({ mission, stars, isLast, onContinue }: MissionDoneP
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          {isLast ? 'Rondje afronden' : 'Volgende opdracht'}
+          Terug naar de kaart
         </motion.button>
       </motion.div>
     </div>

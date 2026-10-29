@@ -5,23 +5,17 @@ import { SceneBackground } from './SceneBackground';
 
 interface Props {
   mission: Mission;
-  missionNumber: number;
-  totalMissions: number;
+  wordCount: number;
   onContinue: () => void;
 }
 
-export function MissionIntro({
-  mission,
-  missionNumber,
-  totalMissions,
-  onContinue,
-}: Props) {
+export function MissionIntro({ mission, wordCount, onContinue }: Props) {
   return (
     <div className="screen mission-intro">
-      <SceneBackground scene={mission.id} />
+      <SceneBackground scene={mission.id} rich />
 
       <p className="mission-intro__progress">
-        Opdracht {missionNumber} van {totalMissions}
+        {wordCount} woordje{wordCount === 1 ? '' : 's'} hier
       </p>
 
       <motion.div

@@ -47,7 +47,7 @@ export function WordGame({
 
   return (
     <div className="screen word-game">
-      <SceneBackground scene={mission.id} />
+      <SceneBackground scene={mission.id} rich />
 
       <header className="word-game__bar">
         <button type="button" className="icon-btn" onClick={onHome} aria-label="Terug naar start">
