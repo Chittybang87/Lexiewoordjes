@@ -67,23 +67,25 @@ export function WordGame({
       </header>
 
       <div className="word-game__stage">
-        <LexieCharacter mood={lexieMood} size={130} className="word-game__lexie" />
+        <div className="word-game__hero">
+          <LexieCharacter mood={lexieMood} size={130} className="word-game__lexie" />
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={word.id}
-            className="word-game__item"
-            initial={{ scale: 0.5, opacity: 0, y: 20 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.8, opacity: 0, y: -20 }}
-            transition={{ type: 'spring', stiffness: 280, damping: 18 }}
-          >
-            <span className="word-game__emoji" role="img" aria-label={word.woord}>
-              {word.emoji}
-            </span>
-            <p className="word-game__hint">Maak het woordje</p>
-          </motion.div>
-        </AnimatePresence>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={word.id}
+              className="word-game__item"
+              initial={{ scale: 0.5, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.8, opacity: 0, y: -20 }}
+              transition={{ type: 'spring', stiffness: 280, damping: 18 }}
+            >
+              <span className="word-game__emoji" role="img" aria-label={word.woord}>
+                {word.emoji}
+              </span>
+              <p className="word-game__hint">Maak het woordje</p>
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
         <motion.div
           className="word-game__slots"

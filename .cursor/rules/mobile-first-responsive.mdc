@@ -1,0 +1,65 @@
+---
+description: Mobile-first responsive UI rules for Lexie Woordjes (touch, layout, units)
+globs: "**/*.{css,tsx,html}"
+alwaysApply: false
+---
+
+# Mobile-first responsive (kleuterspel)
+
+Apply these rules whenever you change layout, CSS, or interactive UI.
+
+## Viewport
+
+Keep in `index.html` `<head>`:
+
+```html
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+```
+
+(`viewport-fit=cover` is allowed for PWA safe-areas.)
+
+## No fixed layout widths
+
+- Do **not** use fixed layout widths like `width: 600px` / `800px` for screens, bars, stages, or panels.
+- Prefer `width: 90%`, `min(100%, 90vw)`, `rem`, or Flexbox/Grid.
+- Decorative scene sprites may keep small `px` sizes; **UI chrome must not**.
+
+## Mobile-first Flexbox
+
+- Default: `flex-direction: column` and stack game UI (buttons, images, score/meta).
+- Side-by-side only from tablet/desktop up:
+
+```css
+@media (min-width: 768px) {
+  .example-bar { flex-direction: row; }
+}
+```
+
+- Do **not** use `max-width` media queries as the primary mobile strategy.
+
+## Touch targets (kleuterhandjes)
+
+- Interactive controls: **min 60px–80px** (`3.75rem`–`5rem`) height **and** width where possible.
+- Use tokens: `--touch-min` (60px), `--touch-comfy` (72px), `--touch-gap` (`1.5rem`).
+- Keep generous spacing between targets: `gap: 1.5rem` on mobile.
+
+```css
+/* ❌ BAD */
+.btn { width: 40px; height: 40px; gap: 4px; }
+
+/* ✅ GOOD */
+.btn {
+  min-width: var(--touch-min);
+  min-height: var(--touch-min);
+  gap: var(--touch-gap);
+}
+```
+
+## Fluid type
+
+- Prefer `rem`, `clamp()`, or `vw` for fonts/icons — not fixed `px` for UI text.
+- Example: `font-size: clamp(1rem, 3.5vw, 1.25rem)`.
+
+## Lexie size
+
+- Size Lexie with `--lexie-size: clamp(...)` on a class; `LexieCharacter` reads `var(--lexie-size, …)`.

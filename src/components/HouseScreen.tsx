@@ -19,7 +19,7 @@ export function HouseScreen({ onSelectRoom, onBack, canVisit }: Props) {
           <span>🏠 In huis</span>
           <span>Kies een kamer</span>
         </div>
-        <div aria-hidden style={{ width: 48 }} />
+        <div className="icon-btn-spacer" aria-hidden />
       </header>
 
       <div className="house-screen__stage">

@@ -75,12 +75,15 @@ export function LexieCharacter({
     return () => window.clearInterval(id);
   }, [mood, anim.frames, anim.interval]);
 
+  const sizeRem = `${size / 16}rem`;
+
   return (
     <motion.div
       className={`lexie-sprite${className ? ` ${className}` : ''}`}
       style={{
-        width: size,
-        height: size,
+        /* CSS classes may override via --lexie-size (fluid/mobile-first) */
+        width: `var(--lexie-size, ${sizeRem})`,
+        height: `var(--lexie-size, ${sizeRem})`,
         scaleX: facing === 'left' ? -1 : 1,
       }}
       animate={anim.bounce}

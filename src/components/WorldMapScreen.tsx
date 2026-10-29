@@ -147,7 +147,7 @@ export function WorldMapScreen({ level, onSelectPlace, onHome, canVisit }: Props
           <span>Waar wil je naartoe?</span>
           <span className="world-map__level">{LEVEL_LABELS[level]}</span>
         </div>
-        <div style={{ width: 48 }} aria-hidden />
+        <div className="icon-btn-spacer" aria-hidden />
       </header>
 
       <AnimatePresence mode="wait">
