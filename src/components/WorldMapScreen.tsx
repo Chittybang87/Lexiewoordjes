@@ -178,19 +178,23 @@ export function WorldMapScreen({ level, onSelectPlace, onHome, canVisit }: Props
           {page === 0 ? (
             <>
               <path
-                d="M50 95 C48 82, 48 72, 48 64 C46 58, 34 56, 20 58"
+                d="M50 95 C42 74, 28 58, 16 48"
                 className="world-map__road-line"
               />
               <path
-                d="M50 95 C55 82, 62 68, 70 58 C73 55, 75 54, 78 55"
+                d="M50 95 C48 70, 44 52, 42 42"
                 className="world-map__road-line"
               />
               <path
-                d="M50 95 C60 88, 72 82, 80 78 C84 76, 86 75, 88 74"
+                d="M50 95 C56 72, 64 54, 70 44"
                 className="world-map__road-line"
               />
               <path
-                d="M86 76 C90 72, 95 66, 100 62"
+                d="M50 95 C64 84, 78 78, 86 72"
+                className="world-map__road-line"
+              />
+              <path
+                d="M86 72 C90 68, 95 64, 100 60"
                 className="world-map__road-line world-map__road-line--exit"
               />
             </>
