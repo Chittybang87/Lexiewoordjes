@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useCallback, useMemo, useRef, useState, type MouseEvent } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type MouseEvent } from 'react';
 import { layoutFor, type Point } from '../data/rooms';
 import type { Mission, WordItem } from '../data/words';
 import { LexieCharacter } from './LexieCharacter';
@@ -58,16 +58,21 @@ export function ExploreWorld({
 }: Props) {
   const room = useMemo(() => layoutFor(mission.id), [mission.id]);
   const spots = useMemo(() => assignSpots(words, room.spots), [words, room.spots]);
+  const searchHint = `Zoek ${target.emoji}`;
   const [pos, setPos] = useState<Point>(room.start);
   const [facing, setFacing] = useState<'left' | 'right'>('right');
   const [walking, setWalking] = useState(false);
   const [mood, setMood] = useState<'idle' | 'walk' | 'wrong' | 'happy'>('idle');
-  const [hint, setHint] = useState(`Zoek ${target.emoji} in de ${mission.naam.toLowerCase()}`);
+  const [hint, setHint] = useState(searchHint);
   const [walkDuration, setWalkDuration] = useState(0.8);
   const [footprints, setFootprints] = useState<Point[]>([]);
   const busy = useRef(false);
   const posRef = useRef(pos);
   posRef.current = pos;
+
+  useEffect(() => {
+    setHint(searchHint);
+  }, [searchHint]);
 
   const walkTo = useCallback((dest: Point, onArrive?: () => void) => {
     const from = posRef.current;
@@ -118,11 +123,11 @@ export function ExploreWorld({
         window.setTimeout(() => {
           setMood('idle');
           busy.current = false;
-          setHint(`Zoek ${target.emoji} in de ${mission.naam.toLowerCase()}`);
+          setHint(searchHint);
         }, 700);
       });
     },
-    [mission.naam, onFound, onTapSound, onWrongSound, spots, target, walkTo, walking],
+    [onFound, onTapSound, onWrongSound, searchHint, spots, target, walkTo, walking],
   );
 
   const handleFloor = useCallback(
@@ -151,38 +156,39 @@ export function ExploreWorld({
 
   return (
     <div className="screen explore">
-      <header className="explore__bar">
-        <button type="button" className="icon-btn" onClick={onHome} aria-label="Terug naar start">
-          ←
-        </button>
-        <div className="explore__meta">
-          <span>
-            {mission.emoji} {mission.naam}
-          </span>
-          <span>
-            {wordIndex + 1}/{totalWords}
-          </span>
-        </div>
-        <div className="explore__stars" aria-label={`${stars} sterren`}>
-          {'★'.repeat(Math.min(stars, 12))}
-        </div>
-      </header>
-
-      <motion.p
-        key={hint}
-        className="explore__hint"
-        initial={{ y: -8, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-      >
-        {hint}
-      </motion.p>
-
       <div
         className={`explore__world explore__world--${mission.id}`}
         onClick={handleFloor}
         role="presentation"
       >
         <SceneBackground scene={mission.id} softVeil rich className="explore__scene" />
+
+        <header className="explore__hud" onClick={(e) => e.stopPropagation()}>
+          <button type="button" className="icon-btn" onClick={onHome} aria-label="Terug naar start">
+            ←
+          </button>
+          <div className="explore__hud-center">
+            <div className="explore__meta">
+              <span>
+                {mission.emoji} {mission.naam}
+              </span>
+              <span>
+                {wordIndex + 1}/{totalWords}
+              </span>
+            </div>
+            <motion.p
+              key={hint}
+              className="explore__hint"
+              initial={{ y: -6, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+            >
+              {hint}
+            </motion.p>
+          </div>
+          <div className="explore__stars" aria-label={`${stars} sterren`}>
+            {'★'.repeat(Math.min(stars, 12)) || '☆'}
+          </div>
+        </header>
 
         <div className="explore__walk-band" style={{ top: `${room.floorMinY}%` }} />
 
@@ -250,22 +256,19 @@ export function ExploreWorld({
           )}
           <LexieCharacter mood={mood} size={118} facing={facing} />
         </motion.div>
+        <AnimatePresence>
+          {mood === 'wrong' && (
+            <motion.p
+              className="explore__toast"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+            >
+              Oeps — zoek {target.emoji}
+            </motion.p>
+          )}
+        </AnimatePresence>
       </div>
-
-      <p className="explore__tip">Tik op een woordje of op de vloer om te lopen</p>
-
-      <AnimatePresence>
-        {mood === 'wrong' && (
-          <motion.p
-            className="explore__toast"
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-          >
-            Oeps — zoek {target.emoji}
-          </motion.p>
-        )}
-      </AnimatePresence>
     </div>
   );
 }
